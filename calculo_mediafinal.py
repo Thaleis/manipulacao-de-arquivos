@@ -1,15 +1,34 @@
-notas_alunos = []
+with open("notas.txt", "r") as arquivo:
+    linhas = arquivo.readlines()
 
-while True:
-    print("Aluno, digite seu nome:")
-    nome = input("- ")
-    notas-de-{nome} = []
-    for i in range (2):
-        print(f"Digite sua {i + 1} nota: ")
-        nota = int(input("- "))
-        notas-de-{nome}.append(nota)
-    
-        
+aluno_atual = None
+notas= []
 
-         
+for linha in linhas:
+    linha = linha.strip()
+    if not linha:
+        continue
 
+    if linha.endswith(":"):
+        if aluno_atual and notas:
+            media = sum(notas) / len(notas)
+            if media > 7:
+                status = 'Aprovado'
+            elif media < 7 and media >= 5:
+                status = 'Em recuperaçao'
+            else:
+                status = 'Reprovado'
+            print(f"Media de {aluno_atual}: {media:.2f}. {status}")
+        aluno_atual =linha[:-1]
+        notas = []
+    else:
+        notas.append(float(linha))
+if aluno_atual and notas:
+    media = sum(notas) / len(notas)
+    if media > 7:
+        status = 'Aprovado'
+    elif media < 7 and media >= 5:
+        status = 'Em recuperaçao'
+    else:
+        status = 'Reprovado'
+    print(f"Media de {aluno_atual}: {media:.2f}. {status}")
